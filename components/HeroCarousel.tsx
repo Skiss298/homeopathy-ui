@@ -64,31 +64,28 @@ export default function HeroCarousel() {
   const videoRefs = useRef<Array<HTMLVideoElement | null>>([]);
 
   const slides = useMemo<Slide[]>(() => {
-    return bannerMedia
-      .map((item) => {
-        if (item.videoSrc) {
-          return {
-            type: "video" as const,
-            src: item.videoSrc,
-            altKey: item.altKey,
-            fallbackImageSrc: item.imageSrc,
-            fit: item.fit ?? "cover",
-            objectPosition: item.objectPosition ?? "center center",
-          };
-        }
-        if (item.imageSrc) {
-          return {
-            type: "image" as const,
-            src: item.imageSrc,
-            altKey: item.altKey,
-            duration: item.duration ?? 6000,
-            fit: item.fit ?? "cover",
-            objectPosition: item.objectPosition ?? "center center",
-          };
-        }
-        return null;
-      })
-      .filter((slide): slide is Slide => slide !== null);
+    return bannerMedia.reduce<Slide[]>((acc, item) => {
+      if (item.videoSrc) {
+        acc.push({
+          type: "video",
+          src: item.videoSrc,
+          altKey: item.altKey,
+          fallbackImageSrc: item.imageSrc,
+          fit: item.fit ?? "cover",
+          objectPosition: item.objectPosition ?? "center center",
+        });
+      } else if (item.imageSrc) {
+        acc.push({
+          type: "image",
+          src: item.imageSrc,
+          altKey: item.altKey,
+          duration: item.duration ?? 6000,
+          fit: item.fit ?? "cover",
+          objectPosition: item.objectPosition ?? "center center",
+        });
+      }
+      return acc;
+    }, []);
   }, []);
 
   const goTo = (index: number) => {
