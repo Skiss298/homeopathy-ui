@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum BookingStatus {
+  HOLD
+  CONFIRMED
+  CANCELLED
+  EXPIRED
+}
+
+model Booking {
+  id          String        @id @default(cuid())
+  startTime   DateTime
+  endTime     DateTime
+  name        String?
+  email       String?
+  phone       String?
+  razorpayOrderId   String?
+  razorpayPaymentId String?
+  razorpaySignature String?
+  confirmedAt DateTime?
+  status      BookingStatus @default(HOLD)
+  holdExpires DateTime?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@index([startTime])
+  @@index([status])
+  @@index([holdExpires])
+  @@index([razorpayOrderId])
+}
