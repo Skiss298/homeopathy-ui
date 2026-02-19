@@ -41,13 +41,13 @@ body {
 /* Hero CTAs over mixed media backgrounds need stronger contrast */
 .btn-hero-primary {
   @apply inline-flex items-center justify-center rounded-xl
-         bg-[#0B5D4B] px-5 py-3 text-white font-semibold shadow-lg
-         ring-1 ring-white/50 hover:bg-[#084D3D] transition;
+         bg-black px-5 py-3 text-white font-semibold shadow-lg
+         border border-[#FACC15] hover:bg-[#111111] transition;
 }
 .btn-hero-secondary {
   @apply inline-flex items-center justify-center rounded-xl
-         bg-white px-5 py-3 text-[#0B3E33] font-semibold shadow-lg
-         ring-1 ring-black/10 hover:bg-[#F2F7F5] transition;
+         bg-black px-5 py-3 text-white font-semibold shadow-lg
+         border border-[#FACC15] hover:bg-[#111111] transition;
 }
 /* Hide the default cursor only on pointer devices (CursorBubbles adds the class) */
 .hide-cursor body { cursor: none; }

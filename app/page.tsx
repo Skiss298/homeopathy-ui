@@ -72,7 +72,7 @@ export default function Page() {
 
         {/* Scroll-motion image + text sections */}
         <ScrollGallery
-          src="/images/gallery-1.jpg"
+          src="/images/gallery-4.jpg"
           title={t("scroll.holisticTitle")}
           body={t("scroll.holisticBody")}
         />

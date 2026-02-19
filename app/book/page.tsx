@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/components/LanguageProvider";
+import { useRouter } from "next/navigation";
 
 type SlotStatus = "AVAILABLE" | "BOOKED";
 
@@ -60,19 +61,7 @@ type RazorpayOrderResponse = {
 
 type RazorpayVerifyResponse = {
   status: "CONFIRMED";
-  confirmation?: ConfirmationDetails;
   error?: string;
-};
-
-type ConfirmationDetails = {
-  bookingId: string;
-  appointmentLabel: string;
-  patientName: string;
-  email: string;
-  phone: string;
-  razorpayOrderId: string;
-  razorpayPaymentId: string;
-  confirmedAt: string | null;
 };
 
 declare global {
@@ -97,6 +86,7 @@ function getErrorMessage(err: unknown, fallback: string) {
 
 export default function BookPage() {
   const { t } = useLanguage();
+  const router = useRouter();
   const [date, setDate] = useState(getTodayIstDateInputValue);
   const [slots, setSlots] = useState<Slot[]>([]);
   const [loading, setLoading] = useState(false);
@@ -107,7 +97,6 @@ export default function BookPage() {
   const [error, setError] = useState("");
   const [payLoading, setPayLoading] = useState(false);
   const [payStatus, setPayStatus] = useState<"IDLE" | "SUCCESS" | "FAILED">("IDLE");
-  const [confirmation, setConfirmation] = useState<ConfirmationDetails | null>(null);
 
   useEffect(() => {
     if (document.getElementById("razorpay-checkout-js")) return;
@@ -121,7 +110,6 @@ export default function BookPage() {
   useEffect(() => {
     setSelectedSlot(null);
     setPayStatus("IDLE");
-    setConfirmation(null);
   }, [date]);
 
   const fetchAvailability = async () => {
@@ -158,7 +146,6 @@ export default function BookPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || t("book.errorHoldSlot"));
       setPayStatus("IDLE");
-      setConfirmation(null);
       await fetchAvailability();
       return { bookingId: data.bookingId };
     } catch (err: unknown) {
@@ -218,11 +205,10 @@ export default function BookPage() {
             if (!verifyRes.ok) {
               throw new Error(verifyData?.error || t("book.errorPaymentVerification"));
             }
-            setConfirmation(verifyData?.confirmation ?? null);
             setPayStatus("SUCCESS");
             setError("");
+            router.push("/book/confirmed");
           } catch (err: unknown) {
-            setConfirmation(null);
             setPayStatus("FAILED");
             setError(getErrorMessage(err, t("book.errorPaymentVerification")));
           }
@@ -371,28 +357,10 @@ export default function BookPage() {
                     : t("book.selectSlotToContinue")}
               </button>
 
-              {payStatus === "SUCCESS" && (
-                <p className="text-sm text-emerald-700">
-                  {t("book.paymentSuccess")}
-                </p>
-              )}
               {payStatus === "FAILED" && (
                 <p className="text-sm text-rose-600">
                   {t("book.paymentFailed")}
                 </p>
-              )}
-
-              {confirmation && (
-                <div className="rounded-xl border border-emerald-300 bg-emerald-50 p-4 text-sm text-emerald-900 space-y-1">
-                  <p className="font-semibold">{t("book.confirmationTitle")}</p>
-                  <p>{t("book.confirmationBookingId", { value: confirmation.bookingId })}</p>
-                  <p>{t("book.confirmationAppointment", { value: confirmation.appointmentLabel })}</p>
-                  <p>{t("book.confirmationName", { value: confirmation.patientName })}</p>
-                  <p>{t("book.confirmationEmail", { value: confirmation.email || "-" })}</p>
-                  <p>{t("book.confirmationPhone", { value: confirmation.phone || "-" })}</p>
-                  <p>{t("book.confirmationOrderId", { value: confirmation.razorpayOrderId || "-" })}</p>
-                  <p>{t("book.confirmationPaymentId", { value: confirmation.razorpayPaymentId || "-" })}</p>
-                </div>
               )}
             </form>
           </div>

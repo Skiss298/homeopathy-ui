@@ -34,7 +34,7 @@ const bannerMedia: BannerMedia[] = [
     objectPosition: "center center",
   },
   {
-    imageSrc: "/images/gallery-4.jpg",
+    imageSrc: "/images/gallery-1.jpg",
     altKey: "hero.alt.homeopathyCare",
     duration: 6000,
     fit: "cover",
@@ -128,7 +128,7 @@ export default function HeroCarousel() {
   if (slides.length === 0) return null;
 
   return (
-    <section className="relative h-[85vh] w-full overflow-hidden">
+    <section className="relative h-[78vh] w-full overflow-hidden">
       {slides.map((slide, index) => {
         const showFallbackImage =
           slide.type === "video" && videoFailures[index] && slide.fallbackImageSrc;
@@ -171,14 +171,14 @@ export default function HeroCarousel() {
 
       <div className="relative z-20 h-full flex items-center">
         <div className="w-full text-white">
-          <div className="max-w-xl w-full text-left flex flex-col items-start ml-auto pr-2 sm:pr-4 md:pr-8">
+          <div className="max-w-[560px] w-full text-left flex flex-col items-start ml-auto pr-0 md:translate-x-8 lg:translate-x-12">
             <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
               <span className="block">{t("hero.titleLine1")}</span>
               <span className="block">{t("hero.titleLine2")}</span>
             </h1>
-            <p className="mt-4 text-lg text-white/90 w-full">{t("hero.subtitle")}</p>
+            <p className="mt-4 text-lg text-white/90 w-full max-w-[470px]">{t("hero.subtitle")}</p>
 
-            <div className="mt-6 flex gap-4">
+            <div className="mt-6 flex justify-start gap-4">
               <a href="/book" className="btn-hero-primary">
                 {t("hero.book")}
               </a>
