@@ -131,8 +131,10 @@ export default function HeroCarousel() {
   return (
     <section className="relative min-h-[560px] h-[74vh] sm:h-[78vh] w-full overflow-hidden">
       {slides.map((slide, index) => {
-        const showFallbackImage =
-          slide.type === "video" && videoFailures[index] && slide.fallbackImageSrc;
+        const showFallbackImage = Boolean(
+          slide.type === "video" && videoFailures[index] && slide.fallbackImageSrc
+        );
+        const imageSrc = showFallbackImage ? slide.fallbackImageSrc ?? slide.src : slide.src;
 
         return (
           <div
@@ -143,7 +145,7 @@ export default function HeroCarousel() {
           >
             {slide.type === "image" || showFallbackImage ? (
               <Image
-                src={showFallbackImage ? slide.fallbackImageSrc : slide.src}
+                src={imageSrc}
                 alt={t(slide.altKey)}
                 fill
                 priority={index === 0}
