@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import Image from "next/image";
 import { useLanguage } from "@/components/LanguageProvider";
 
 type Slide = {
@@ -128,7 +129,7 @@ export default function HeroCarousel() {
   if (slides.length === 0) return null;
 
   return (
-    <section className="relative h-[78vh] w-full overflow-hidden">
+    <section className="relative min-h-[560px] h-[74vh] sm:h-[78vh] w-full overflow-hidden">
       {slides.map((slide, index) => {
         const showFallbackImage =
           slide.type === "video" && videoFailures[index] && slide.fallbackImageSrc;
@@ -141,10 +142,13 @@ export default function HeroCarousel() {
             }`}
           >
             {slide.type === "image" || showFallbackImage ? (
-              <img
+              <Image
                 src={showFallbackImage ? slide.fallbackImageSrc : slide.src}
                 alt={t(slide.altKey)}
-                className={`h-full w-full ${
+                fill
+                priority={index === 0}
+                sizes="100vw"
+                className={`${
                   (slide.fit ?? "cover") === "contain" ? "object-contain" : "object-cover"
                 }`}
                 style={{ objectPosition: slide.objectPosition ?? "center center" }}
@@ -169,20 +173,20 @@ export default function HeroCarousel() {
         );
       })}
 
-      <div className="relative z-20 h-full flex items-center">
-        <div className="w-full text-white">
-          <div className="max-w-[560px] w-full text-left flex flex-col items-start ml-auto pr-0 md:translate-x-8 lg:translate-x-12">
-            <h1 className="text-4xl md:text-5xl font-semibold leading-tight">
+      <div className="relative z-20 flex h-full items-center">
+        <div className="w-full px-4 sm:px-6 md:px-10 text-white">
+          <div className="w-full max-w-[560px] text-left flex flex-col items-start ml-0 md:ml-auto md:translate-x-6 lg:translate-x-12">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold leading-tight">
               <span className="block">{t("hero.titleLine1")}</span>
               <span className="block">{t("hero.titleLine2")}</span>
             </h1>
-            <p className="mt-4 text-lg text-white/90 w-full max-w-[470px]">{t("hero.subtitle")}</p>
+            <p className="mt-4 text-base sm:text-lg text-white/90 w-full max-w-[470px]">{t("hero.subtitle")}</p>
 
-            <div className="mt-6 flex justify-start gap-4">
-              <a href="/book" className="btn-hero-primary">
+            <div className="mt-6 flex w-full flex-col sm:w-auto sm:flex-row justify-start gap-3 sm:gap-4">
+              <a href="/book" className="btn-hero-primary w-full sm:w-auto text-center">
                 {t("hero.book")}
               </a>
-              <a href="#why" className="btn-hero-secondary">
+              <a href="#why" className="btn-hero-secondary w-full sm:w-auto text-center">
                 {t("hero.learnMore")}
               </a>
             </div>

@@ -16,15 +16,80 @@ const marker = Permanent_Marker({
   weight: "400",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "http://localhost:3000";
+const metadataBase = new URL(siteUrl);
+
 export const metadata: Metadata = {
-  title: "Sai Jagruthi Homeopathy Clinic",
-  description: "Compassionate homeopathy teleconsultations.",
+  metadataBase,
+  title: {
+    default: "Sai Jagruthi Homeopathy Clinic",
+    template: "%s | Sai Jagruthi Homeopathy Clinic",
+  },
+  description:
+    "Book trusted homeopathy teleconsultations with Dr. Sai Jagruthi for allergies, skin concerns, respiratory conditions, women's health, and more.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: "/",
+    siteName: "Sai Jagruthi Homeopathy Clinic",
+    title: "Sai Jagruthi Homeopathy Clinic",
+    description:
+      "Compassionate, personalized homeopathy care with secure online booking and follow-up support.",
+    images: [
+      {
+        url: "/images/hero.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Sai Jagruthi Homeopathy Clinic",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sai Jagruthi Homeopathy Clinic",
+    description:
+      "Compassionate, personalized homeopathy care with secure online booking and follow-up support.",
+    images: ["/images/hero.jpg"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const clinicSchema = {
+    "@context": "https://schema.org",
+    "@type": "MedicalClinic",
+    name: "Sai Jagruthi Homeopathy Clinic",
+    url: siteUrl,
+    medicalSpecialty: "Homeopathic",
+    telephone: "+91-949-481-9479",
+    email: "doctorjagruthi@gmail.com",
+    image: `${siteUrl}/images/hero.jpg`,
+    description:
+      "Personalized homeopathy consultations for chronic and acute concerns with online booking support.",
+    areaServed: "India",
+    availableLanguage: ["English", "Telugu", "Hindi", "Tamil", "Malayalam", "Marathi", "Bengali"],
+  };
+
   return (
     <html lang="en">
       <body className={`${sourceSans.variable} ${cormorant.variable} ${marker.variable} antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(clinicSchema) }}
+        />
         <LanguageProvider>
           {children}
           <CursorBubbles />

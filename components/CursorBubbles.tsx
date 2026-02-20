@@ -11,12 +11,20 @@ export default function CursorBubbles() {
   const mouse = useRef({ x: -100, y: -100 });
 
   useEffect(() => {
+    const hasPointer = window.matchMedia("(pointer: fine)").matches;
+    if (hasPointer) document.documentElement.classList.add("hide-cursor");
+    return () => document.documentElement.classList.remove("hide-cursor");
+  }, []);
+
+  useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
     const onMove = (e: MouseEvent) => { mouse.current = { x: e.clientX, y: e.clientY }; };
     window.addEventListener("mousemove", onMove);
     return () => window.removeEventListener("mousemove", onMove);
   }, []);
 
   useEffect(() => {
+    if (!window.matchMedia("(pointer: fine)").matches) return;
     let raf = 0;
     const step = () => {
       // simple trailing effect
@@ -44,13 +52,6 @@ export default function CursorBubbles() {
     };
     raf = requestAnimationFrame(step);
     return () => cancelAnimationFrame(raf);
-  }, []);
-
-  // Hide cursor only on pointer devices (not touch)
-  useEffect(() => {
-    const hasPointer = window.matchMedia("(pointer: fine)").matches;
-    if (hasPointer) document.documentElement.classList.add("hide-cursor");
-    return () => document.documentElement.classList.remove("hide-cursor");
   }, []);
 
   return (
