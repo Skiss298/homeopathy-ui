@@ -55,7 +55,7 @@ export default function Navbar() {
                 <Link href="/book" className="rounded-lg px-3 py-2 hover:bg-sage/40">
                   {t("nav.book")}
                 </Link>
-                <Link href="/contact" className="rounded-lg px-3 py-2 hover:bg-sage/40">
+                <Link href="/free-consultation" className="rounded-lg px-3 py-2 hover:bg-sage/40">
                   {t("nav.freeConsultation")}
                 </Link>
                 <Link href="/queries-feedback" className="rounded-lg px-3 py-2 hover:bg-sage/40">
@@ -145,7 +145,7 @@ export default function Navbar() {
                   {t("nav.book")}
                 </Link>
                 <Link
-                  href="/contact"
+                  href="/free-consultation"
                   className="rounded-lg px-2 py-2 text-sm text-white/90 hover:bg-white/10"
                   onClick={() => setMobileOpen(false)}
                 >
