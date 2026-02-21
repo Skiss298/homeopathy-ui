@@ -3,13 +3,14 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 type Props = {
-  searchParams?: {
+  searchParams?: Promise<{
     type?: string;
-  };
+  }>;
 };
 
-export default function QueriesFeedbackConfirmedPage({ searchParams }: Props) {
-  const type = (searchParams?.type ?? "").toLowerCase();
+export default async function QueriesFeedbackConfirmedPage({ searchParams }: Props) {
+  const params = (await searchParams) ?? {};
+  const type = (params.type ?? "").toLowerCase();
   const isQuery = type === "query";
 
   return (
