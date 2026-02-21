@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -10,6 +11,29 @@ type Params = {
 
 export function generateStaticParams() {
   return DISEASES.map((disease) => ({ slug: disease.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<Params>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const disease = DISEASE_BY_SLUG[slug];
+  if (!disease) {
+    return {
+      title: "Service Not Found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  return {
+    title: `${disease.name} Homeopathy Support`,
+    description: `Learn symptoms, causes, and personalized homeopathy support for ${disease.name} at Sai Jagruthi Homeopathy Clinic.`,
+    alternates: {
+      canonical: `/services/${disease.slug}`,
+    },
+  };
 }
 
 export default async function ServiceDiseasePage({
