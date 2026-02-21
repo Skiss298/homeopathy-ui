@@ -46,12 +46,27 @@ export default function Navbar() {
             </div>
           </div>
 
-          <Link href="/contact" className="text-base text-white/90 hover:underline">
-            {t("nav.contact")}
-          </Link>
-          <Link href="/book" className="text-base text-white/90 hover:underline">
-            {t("nav.book")}
-          </Link>
+          <div className="group relative">
+            <Link href="/contact" className="text-base text-white/90 hover:underline">
+              {t("nav.contact")}
+            </Link>
+            <div className="pointer-events-none absolute left-0 top-full w-56 pt-2 opacity-0 transition-all group-hover:pointer-events-auto group-hover:opacity-100">
+              <div className="flex flex-col rounded-xl border border-sage/60 bg-white p-2 text-sm text-charcoal shadow-soft">
+                <Link href="/book" className="rounded-lg px-3 py-2 hover:bg-sage/40">
+                  {t("nav.book")}
+                </Link>
+                <Link href="/contact" className="rounded-lg px-3 py-2 hover:bg-sage/40">
+                  {t("nav.freeConsultation")}
+                </Link>
+                <Link href="/queries-feedback" className="rounded-lg px-3 py-2 hover:bg-sage/40">
+                  {t("nav.queriesFeedback")}
+                </Link>
+                <Link href="/contact" className="rounded-lg px-3 py-2 hover:bg-sage/40">
+                  {t("nav.connect")}
+                </Link>
+              </div>
+            </div>
+          </div>
 
           <div className="group relative">
             <button
