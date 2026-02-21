@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useRouter } from "next/navigation";
+import { isValidEmail, isValidIndianPhone } from "@/lib/validation";
 
 type SlotStatus = "AVAILABLE" | "BOOKED" | "UNAVAILABLE";
 
@@ -131,6 +132,14 @@ export default function BookPage() {
     if (!selectedSlot) return null;
     if (new Date(selectedSlot.startUtc) <= new Date()) {
       setError("Selected slot is in the past. Please choose a future slot.");
+      return null;
+    }
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return null;
+    }
+    if (!isValidIndianPhone(phone)) {
+      setError("Please enter a valid mobile number.");
       return null;
     }
     setLoading(true);
@@ -326,6 +335,7 @@ export default function BookPage() {
                   onChange={(e) => setName(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder={t("book.fullNamePlaceholder")}
+                  required
                 />
               </div>
               <div>
@@ -336,6 +346,7 @@ export default function BookPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder={t("book.emailPlaceholder")}
+                  required
                 />
               </div>
               <div>
@@ -346,6 +357,8 @@ export default function BookPage() {
                   onChange={(e) => setPhone(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder={t("book.phonePlaceholder")}
+                  inputMode="tel"
+                  required
                 />
               </div>
 

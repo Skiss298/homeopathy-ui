@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { buildSlotsForDate } from "@/lib/slots";
+import { isValidEmail, isValidIndianPhone, normalizePhone } from "@/lib/validation";
 
 export const runtime = "nodejs";
 
@@ -12,13 +13,23 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "date and startUtc are required" }, { status: 400 });
   }
 
-  const { date, startUtc, name, email, phone } = body;
-  if (!name || !email || !phone) {
+  const { date, startUtc } = body;
+  const name = typeof body.name === "string" ? body.name.trim() : "";
+  const email = typeof body.email === "string" ? body.email.trim() : "";
+  const phoneRaw = typeof body.phone === "string" ? body.phone.trim() : "";
+  if (!name || !email || !phoneRaw) {
     return NextResponse.json(
       { error: "name, email, and phone are required" },
       { status: 400 }
     );
   }
+  if (!isValidEmail(email)) {
+    return NextResponse.json({ error: "invalid email address" }, { status: 400 });
+  }
+  if (!isValidIndianPhone(phoneRaw)) {
+    return NextResponse.json({ error: "invalid phone number" }, { status: 400 });
+  }
+  const phone = normalizePhone(phoneRaw);
 
   const slots = buildSlotsForDate(date);
   const slot = slots.find((s) => s.startUtc.toISOString() === startUtc);

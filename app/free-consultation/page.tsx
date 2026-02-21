@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { isValidEmail, isValidIndianPhone } from "@/lib/validation";
 
 type SlotStatus = "AVAILABLE" | "BOOKED" | "UNAVAILABLE";
 
@@ -63,6 +64,14 @@ export default function FreeConsultationPage() {
     if (!selectedSlot) return;
     if (new Date(selectedSlot.startUtc) <= new Date()) {
       setError("Selected slot is in the past. Please choose a future slot.");
+      return;
+    }
+    if (!isValidEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    if (!isValidIndianPhone(phone)) {
+      setError("Please enter a valid mobile number.");
       return;
     }
 
@@ -191,6 +200,7 @@ export default function FreeConsultationPage() {
                   onChange={(e) => setPhone(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder="+91 8712385456"
+                  inputMode="tel"
                   required
                 />
               </div>
