@@ -27,6 +27,10 @@ export async function POST(request: Request) {
   }
 
   const now = new Date();
+  if (slot.startUtc <= now) {
+    return NextResponse.json({ error: "slot time has already passed" }, { status: 409 });
+  }
+
   await prisma.booking.updateMany({
     where: { status: "HOLD", holdExpires: { lt: now } },
     data: { status: "EXPIRED" },

@@ -88,8 +88,8 @@ const en: Record<string, string> = {
   "home.contact.hours": "Hours: Mon–Sat, 9:00 AM–6:00 PM",
 
   "footer.copyright": "© {year} Dr. Sai Jagruthi Homeopathy Clinic",
-  "footer.privacy": "Privacy",
-  "footer.terms": "Terms",
+  "footer.privacy": "Pravicay Policy",
+  "footer.terms": "Terms & Conditions",
   "footer.contact": "Contact",
 
   "about.title": "Message from Dr. Sai Jagruthi",

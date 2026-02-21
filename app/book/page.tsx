@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useRouter } from "next/navigation";
 
-type SlotStatus = "AVAILABLE" | "BOOKED";
+type SlotStatus = "AVAILABLE" | "BOOKED" | "UNAVAILABLE";
 
 type Slot = {
   startUtc: string;
@@ -129,6 +129,10 @@ export default function BookPage() {
 
   const holdSlot = async (): Promise<{ bookingId: string } | null> => {
     if (!selectedSlot) return null;
+    if (new Date(selectedSlot.startUtc) <= new Date()) {
+      setError("Selected slot is in the past. Please choose a future slot.");
+      return null;
+    }
     setLoading(true);
     setError("");
     try {

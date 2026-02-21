@@ -54,7 +54,12 @@ export async function GET(request: Request) {
     startUtc: slot.startUtc.toISOString(),
     endUtc: slot.endUtc.toISOString(),
     label: slot.label,
-    status: bookedSet.has(slot.startUtc.toISOString()) ? "BOOKED" : "AVAILABLE",
+    status:
+      slot.startUtc <= now
+        ? "UNAVAILABLE"
+        : bookedSet.has(slot.startUtc.toISOString())
+          ? "BOOKED"
+          : "AVAILABLE",
   }));
 
   return NextResponse.json({ date, slots: response });
