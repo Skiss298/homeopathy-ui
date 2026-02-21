@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/free-consultation",
     "/contact",
     "/queries-feedback",
+    "/queries-feedback/confirmed",
     "/legal/privacy",
     "/legal/terms",
   ].map((path) => ({

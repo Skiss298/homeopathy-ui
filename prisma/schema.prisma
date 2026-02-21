@@ -14,6 +14,11 @@ enum BookingStatus {
   EXPIRED
 }
 
+enum InquiryType {
+  QUERY
+  FEEDBACK
+}
+
 model Booking {
   id          String        @id @default(cuid())
   startTime   DateTime
@@ -34,4 +39,18 @@ model Booking {
   @@index([status])
   @@index([holdExpires])
   @@index([razorpayOrderId])
+}
+
+model Inquiry {
+  id        String      @id @default(cuid())
+  type      InquiryType
+  name      String
+  email     String
+  phone     String
+  message   String
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+
+  @@index([type])
+  @@index([createdAt])
 }
