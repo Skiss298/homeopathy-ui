@@ -134,19 +134,39 @@ export default function Navbar() {
                 ))}
               </div>
             </div>
-            <Link href="/book" className="rounded-lg px-2 py-2 text-white/95" onClick={() => setMobileOpen(false)}>
-              {t("nav.book")}
-            </Link>
-            <Link href="/contact" className="rounded-lg px-2 py-2 text-white/95" onClick={() => setMobileOpen(false)}>
-              {t("nav.contact")}
-            </Link>
-            <Link
-              href="/queries-feedback"
-              className="rounded-lg px-2 py-2 text-white/95"
-              onClick={() => setMobileOpen(false)}
-            >
-              {t("nav.queriesFeedback")}
-            </Link>
+            <div className="rounded-xl border border-white/20 p-2">
+              <p className="px-2 py-1 text-sm text-white/80">{t("nav.contact")}</p>
+              <div className="grid gap-1">
+                <Link
+                  href="/book"
+                  className="rounded-lg px-2 py-2 text-sm text-white/90 hover:bg-white/10"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("nav.book")}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-lg px-2 py-2 text-sm text-white/90 hover:bg-white/10"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("nav.freeConsultation")}
+                </Link>
+                <Link
+                  href="/queries-feedback"
+                  className="rounded-lg px-2 py-2 text-sm text-white/90 hover:bg-white/10"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("nav.queriesFeedback")}
+                </Link>
+                <Link
+                  href="/contact"
+                  className="rounded-lg px-2 py-2 text-sm text-white/90 hover:bg-white/10"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {t("nav.connect")}
+                </Link>
+              </div>
+            </div>
 
             <div className="rounded-xl border border-white/20 p-2">
               <p className="px-2 py-1 text-sm text-white/80">{t("nav.selectLanguage")}</p>
