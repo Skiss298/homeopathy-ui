@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { buildSlotsForDate } from "@/lib/slots";
 import { sendEmail, sendSms } from "@/lib/notifications";
 import { isValidEmail, isValidIndianPhone, normalizePhone } from "@/lib/validation";
+import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
 
 export const runtime = "nodejs";
 
@@ -78,6 +79,7 @@ export async function POST(request: Request) {
     email: booking.email ?? "",
     phone: booking.phone ?? "",
     appointmentLabel,
+    bookingId: booking.id,
   };
 
   try {
@@ -105,6 +107,8 @@ export async function POST(request: Request) {
       email: notifyPayload.email,
       phone: notifyPayload.phone,
       confirmedAt: booking.confirmedAt?.toISOString() ?? null,
+      googleMeetLink: getGoogleMeetLink(),
+      clinicWhatsappNumber: getClinicWhatsappNumber(),
     },
   });
 }

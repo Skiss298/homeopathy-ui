@@ -63,6 +63,11 @@ type RazorpayOrderResponse = {
 type RazorpayVerifyResponse = {
   status: "CONFIRMED";
   error?: string;
+  confirmation?: {
+    bookingId: string;
+    appointmentLabel: string;
+    googleMeetLink?: string | null;
+  };
 };
 
 declare global {
@@ -220,7 +225,17 @@ export default function BookPage() {
             }
             setPayStatus("SUCCESS");
             setError("");
-            router.push("/book/confirmed");
+            const params = new URLSearchParams();
+            if (verifyData.confirmation?.bookingId) {
+              params.set("bookingId", verifyData.confirmation.bookingId);
+            }
+            if (verifyData.confirmation?.appointmentLabel) {
+              params.set("appointment", verifyData.confirmation.appointmentLabel);
+            }
+            if (verifyData.confirmation?.googleMeetLink) {
+              params.set("meet", verifyData.confirmation.googleMeetLink);
+            }
+            router.push(`/book/confirmed${params.toString() ? `?${params.toString()}` : ""}`);
           } catch (err: unknown) {
             setPayStatus("FAILED");
             setError(getErrorMessage(err, t("book.errorPaymentVerification")));

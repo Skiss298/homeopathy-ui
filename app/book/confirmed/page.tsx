@@ -1,8 +1,31 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import Link from "next/link";
+import {
+  buildClinicWhatsappMessage,
+  getClinicWhatsappUrl,
+  getGoogleMeetLink,
+} from "@/lib/consultation";
 
-export default function BookingConfirmedPage() {
+type ConfirmedPageProps = {
+  searchParams?: {
+    bookingId?: string;
+    appointment?: string;
+    meet?: string;
+  };
+};
+
+export default function BookingConfirmedPage({ searchParams }: ConfirmedPageProps) {
+  const bookingId = searchParams?.bookingId?.trim() || "";
+  const appointmentLabel = searchParams?.appointment?.trim() || "";
+  const meetLink = searchParams?.meet?.trim() || getGoogleMeetLink() || "";
+  const whatsappLink = getClinicWhatsappUrl(
+    buildClinicWhatsappMessage({
+      bookingId,
+      appointmentLabel,
+    })
+  );
+
   return (
     <>
       <Navbar />
@@ -15,9 +38,29 @@ export default function BookingConfirmedPage() {
             Your appointment is confirmed.
           </p>
           <p className="mt-2 text-charcoal/80 leading-relaxed">
-            You will receive the consultation video link on your mobile number and email shortly.
+            Your consultation will happen on Google Meet. Keep this page handy to join quickly.
           </p>
+          {appointmentLabel && (
+            <p className="mt-2 text-charcoal/80 leading-relaxed">
+              Appointment: {appointmentLabel} IST
+            </p>
+          )}
+          {bookingId && (
+            <p className="mt-1 text-charcoal/70 leading-relaxed">
+              Booking ID: {bookingId}
+            </p>
+          )}
           <div className="mt-8 flex flex-wrap gap-3">
+            {meetLink && (
+              <a href={meetLink} target="_blank" rel="noreferrer" className="btn-primary">
+                Join on Google Meet
+              </a>
+            )}
+            {whatsappLink && (
+              <a href={whatsappLink} target="_blank" rel="noreferrer" className="btn-outline">
+                Confirm via WhatsApp
+              </a>
+            )}
             <Link href="/" className="btn-primary">Go To Home</Link>
             <Link href="/contact" className="btn-outline">Contact Clinic</Link>
           </div>

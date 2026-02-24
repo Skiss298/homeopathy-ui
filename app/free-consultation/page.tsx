@@ -91,7 +91,17 @@ export default function FreeConsultationPage() {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data?.error || "Failed to book free consultation");
-      router.push("/free-consultation/confirmed");
+      const params = new URLSearchParams();
+      if (data?.confirmation?.bookingId) {
+        params.set("bookingId", data.confirmation.bookingId);
+      }
+      if (data?.confirmation?.appointmentLabel) {
+        params.set("appointment", data.confirmation.appointmentLabel);
+      }
+      if (data?.confirmation?.googleMeetLink) {
+        params.set("meet", data.confirmation.googleMeetLink);
+      }
+      router.push(`/free-consultation/confirmed${params.toString() ? `?${params.toString()}` : ""}`);
     } catch (err: unknown) {
       setError(getErrorMessage(err, "Failed to book free consultation"));
     } finally {

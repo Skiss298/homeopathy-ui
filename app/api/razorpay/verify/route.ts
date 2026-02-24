@@ -2,6 +2,7 @@ import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendEmail, sendSms } from "@/lib/notifications";
+import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
 
 export const runtime = "nodejs";
 
@@ -66,6 +67,7 @@ export async function POST(request: Request) {
     email: updated.email ?? "",
     phone: updated.phone ?? "",
     appointmentLabel,
+    bookingId: updated.id,
   };
 
   try {
@@ -95,6 +97,8 @@ export async function POST(request: Request) {
       razorpayOrderId: updated.razorpayOrderId,
       razorpayPaymentId: updated.razorpayPaymentId,
       confirmedAt: updated.confirmedAt?.toISOString() ?? null,
+      googleMeetLink: getGoogleMeetLink(),
+      clinicWhatsappNumber: getClinicWhatsappNumber(),
     },
   });
 }

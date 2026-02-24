@@ -1,4 +1,5 @@
 import nodemailer from "nodemailer";
+import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
 
 const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
@@ -15,13 +16,24 @@ type NotifyPayload = {
   email: string;
   phone: string;
   appointmentLabel: string;
+  bookingId?: string;
 };
 
 type MessageKind = "HOLD" | "CONFIRMED";
 
 function buildMessage(kind: MessageKind, { name, appointmentLabel }: NotifyPayload) {
+  const meetLink = getGoogleMeetLink();
+  const clinicWhatsappNumber = getClinicWhatsappNumber();
+
   if (kind === "CONFIRMED") {
-    return `Hi ${name}, your appointment is confirmed for ${appointmentLabel} IST.`;
+    const parts = [`Hi ${name}, your appointment is confirmed for ${appointmentLabel} IST.`];
+    if (meetLink) {
+      parts.push(`Google Meet link: ${meetLink}`);
+    }
+    if (clinicWhatsappNumber) {
+      parts.push(`WhatsApp support: https://wa.me/${clinicWhatsappNumber}`);
+    }
+    return parts.join(" ");
   }
   return `Hi ${name}, your appointment is held for ${appointmentLabel} IST. Please complete payment to confirm.`;
 }
