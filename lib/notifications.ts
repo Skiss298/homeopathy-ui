@@ -1,5 +1,6 @@
 import nodemailer from "nodemailer";
 import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
+import { normalizePhone } from "@/lib/validation";
 
 const SMTP_HOST = process.env.SMTP_HOST;
 const SMTP_PORT = process.env.SMTP_PORT ? Number(process.env.SMTP_PORT) : undefined;
@@ -10,6 +11,7 @@ const SMTP_FROM = process.env.SMTP_FROM;
 const TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID;
 const TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN;
 const TWILIO_FROM = process.env.TWILIO_FROM;
+const TWILIO_WHATSAPP_FROM = process.env.TWILIO_WHATSAPP_FROM;
 
 type NotifyPayload = {
   name: string;
@@ -18,16 +20,23 @@ type NotifyPayload = {
   appointmentLabel: string;
   bookingId?: string;
   meetLink?: string;
+  paymentConfirmed?: boolean;
 };
 
 type MessageKind = "HOLD" | "CONFIRMED";
 
-function buildMessage(kind: MessageKind, { name, appointmentLabel, meetLink }: NotifyPayload) {
+function buildMessage(
+  kind: MessageKind,
+  { name, appointmentLabel, meetLink, paymentConfirmed }: NotifyPayload
+) {
   const resolvedMeetLink = meetLink ?? getGoogleMeetLink();
   const clinicWhatsappNumber = getClinicWhatsappNumber();
 
   if (kind === "CONFIRMED") {
-    const parts = [`Hi ${name}, your appointment is confirmed for ${appointmentLabel} IST.`];
+    const opening = paymentConfirmed
+      ? `Hi ${name}, payment received successfully. Your appointment is confirmed for ${appointmentLabel} IST.`
+      : `Hi ${name}, your appointment is confirmed for ${appointmentLabel} IST.`;
+    const parts = [opening];
     if (resolvedMeetLink) {
       parts.push(`Google Meet link: ${resolvedMeetLink}`);
     }
@@ -90,6 +99,63 @@ export async function sendSms(payload: NotifyPayload, kind: MessageKind) {
   if (!res.ok) {
     const errorText = await res.text();
     throw new Error(`Twilio SMS failed: ${errorText}`);
+  }
+
+  return { ok: true, skipped: false };
+}
+
+function toTwilioWhatsappTo(rawPhone: string) {
+  const trimmed = rawPhone.trim();
+  if (!trimmed) return null;
+  if (trimmed.startsWith("whatsapp:")) return trimmed;
+
+  const normalized = normalizePhone(trimmed);
+  if (normalized.startsWith("+")) {
+    return `whatsapp:${normalized}`;
+  }
+
+  if (/^\d{10}$/.test(normalized)) {
+    return `whatsapp:+91${normalized}`;
+  }
+
+  if (/^\d{11,15}$/.test(normalized)) {
+    return `whatsapp:+${normalized}`;
+  }
+
+  return null;
+}
+
+export async function sendWhatsapp(payload: NotifyPayload, kind: MessageKind) {
+  if (!TWILIO_ACCOUNT_SID || !TWILIO_AUTH_TOKEN || !TWILIO_WHATSAPP_FROM) {
+    return { ok: false, skipped: true, reason: "whatsapp_not_configured" as const };
+  }
+
+  const to = toTwilioWhatsappTo(payload.phone);
+  if (!to) {
+    return { ok: false, skipped: true, reason: "invalid_phone" as const };
+  }
+
+  const body = buildMessage(kind, payload);
+  const url = `https://api.twilio.com/2010-04-01/Accounts/${TWILIO_ACCOUNT_SID}/Messages.json`;
+  const auth = Buffer.from(`${TWILIO_ACCOUNT_SID}:${TWILIO_AUTH_TOKEN}`).toString("base64");
+  const params = new URLSearchParams({
+    From: TWILIO_WHATSAPP_FROM,
+    To: to,
+    Body: body,
+  });
+
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      Authorization: `Basic ${auth}`,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: params.toString(),
+  });
+
+  if (!res.ok) {
+    const errorText = await res.text();
+    throw new Error(`Twilio WhatsApp failed: ${errorText}`);
   }
 
   return { ok: true, skipped: false };

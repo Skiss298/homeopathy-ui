@@ -1,7 +1,7 @@
 import crypto from "crypto";
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { sendEmail, sendSms } from "@/lib/notifications";
+import { sendEmail, sendSms, sendWhatsapp } from "@/lib/notifications";
 import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
 import { createConsultationMeeting } from "@/lib/google-calendar";
 
@@ -86,6 +86,7 @@ export async function POST(request: Request) {
     appointmentLabel,
     bookingId: updated.id,
     meetLink: bookingMeetLink ?? getGoogleMeetLink() ?? undefined,
+    paymentConfirmed: true,
   };
 
   try {
@@ -102,6 +103,14 @@ export async function POST(request: Request) {
     }
   } catch (err) {
     console.error("SMS send failed", err);
+  }
+
+  try {
+    if (notifyPayload.phone) {
+      await sendWhatsapp(notifyPayload, "CONFIRMED");
+    }
+  } catch (err) {
+    console.error("WhatsApp send failed", err);
   }
 
   return NextResponse.json({
