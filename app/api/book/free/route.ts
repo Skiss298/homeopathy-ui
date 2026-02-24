@@ -4,6 +4,7 @@ import { buildSlotsForDate } from "@/lib/slots";
 import { sendEmail, sendSms } from "@/lib/notifications";
 import { isValidEmail, isValidIndianPhone, normalizePhone } from "@/lib/validation";
 import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
+import { createConsultationMeeting } from "@/lib/google-calendar";
 
 export const runtime = "nodejs";
 
@@ -74,12 +75,29 @@ export async function POST(request: Request) {
     timeStyle: "short",
   });
 
+  let bookingMeetLink: string | null = null;
+  try {
+    const meetingResult = await createConsultationMeeting({
+      bookingId: booking.id,
+      patientName: booking.name ?? "Patient",
+      patientEmail: booking.email ?? undefined,
+      startTime: booking.startTime,
+      endTime: booking.endTime,
+    });
+    if (meetingResult.ok) {
+      bookingMeetLink = meetingResult.meetLink;
+    }
+  } catch (err) {
+    console.error("Google Calendar event create failed", err);
+  }
+
   const notifyPayload = {
     name: booking.name ?? "Patient",
     email: booking.email ?? "",
     phone: booking.phone ?? "",
     appointmentLabel,
     bookingId: booking.id,
+    meetLink: bookingMeetLink ?? getGoogleMeetLink() ?? undefined,
   };
 
   try {
@@ -107,7 +125,7 @@ export async function POST(request: Request) {
       email: notifyPayload.email,
       phone: notifyPayload.phone,
       confirmedAt: booking.confirmedAt?.toISOString() ?? null,
-      googleMeetLink: getGoogleMeetLink(),
+      googleMeetLink: bookingMeetLink ?? getGoogleMeetLink(),
       clinicWhatsappNumber: getClinicWhatsappNumber(),
     },
   });

@@ -17,18 +17,19 @@ type NotifyPayload = {
   phone: string;
   appointmentLabel: string;
   bookingId?: string;
+  meetLink?: string;
 };
 
 type MessageKind = "HOLD" | "CONFIRMED";
 
-function buildMessage(kind: MessageKind, { name, appointmentLabel }: NotifyPayload) {
-  const meetLink = getGoogleMeetLink();
+function buildMessage(kind: MessageKind, { name, appointmentLabel, meetLink }: NotifyPayload) {
+  const resolvedMeetLink = meetLink ?? getGoogleMeetLink();
   const clinicWhatsappNumber = getClinicWhatsappNumber();
 
   if (kind === "CONFIRMED") {
     const parts = [`Hi ${name}, your appointment is confirmed for ${appointmentLabel} IST.`];
-    if (meetLink) {
-      parts.push(`Google Meet link: ${meetLink}`);
+    if (resolvedMeetLink) {
+      parts.push(`Google Meet link: ${resolvedMeetLink}`);
     }
     if (clinicWhatsappNumber) {
       parts.push(`WhatsApp support: https://wa.me/${clinicWhatsappNumber}`);

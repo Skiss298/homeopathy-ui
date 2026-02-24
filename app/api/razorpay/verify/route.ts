@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { sendEmail, sendSms } from "@/lib/notifications";
 import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
+import { createConsultationMeeting } from "@/lib/google-calendar";
 
 export const runtime = "nodejs";
 
@@ -62,12 +63,29 @@ export async function POST(request: Request) {
     timeStyle: "short",
   });
 
+  let bookingMeetLink: string | null = null;
+  try {
+    const meetingResult = await createConsultationMeeting({
+      bookingId: updated.id,
+      patientName: updated.name ?? "Patient",
+      patientEmail: updated.email ?? undefined,
+      startTime: updated.startTime,
+      endTime: updated.endTime,
+    });
+    if (meetingResult.ok) {
+      bookingMeetLink = meetingResult.meetLink;
+    }
+  } catch (err) {
+    console.error("Google Calendar event create failed", err);
+  }
+
   const notifyPayload = {
     name: updated.name ?? "Patient",
     email: updated.email ?? "",
     phone: updated.phone ?? "",
     appointmentLabel,
     bookingId: updated.id,
+    meetLink: bookingMeetLink ?? getGoogleMeetLink() ?? undefined,
   };
 
   try {
@@ -97,7 +115,7 @@ export async function POST(request: Request) {
       razorpayOrderId: updated.razorpayOrderId,
       razorpayPaymentId: updated.razorpayPaymentId,
       confirmedAt: updated.confirmedAt?.toISOString() ?? null,
-      googleMeetLink: getGoogleMeetLink(),
+      googleMeetLink: bookingMeetLink ?? getGoogleMeetLink(),
       clinicWhatsappNumber: getClinicWhatsappNumber(),
     },
   });
