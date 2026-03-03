@@ -24,6 +24,7 @@ model Booking {
   startTime   DateTime
   endTime     DateTime
   name        String?
+  age         Int?
   email       String?
   phone       String?
   razorpayOrderId   String?
@@ -34,11 +35,24 @@ model Booking {
   holdExpires DateTime?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+  caseSheet   CaseSheet?
 
   @@index([startTime])
   @@index([status])
   @@index([holdExpires])
   @@index([razorpayOrderId])
+}
+
+model CaseSheet {
+  id             String   @id @default(cuid())
+  bookingId      String   @unique
+  caseSummary    String?
+  medicationPlan String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  booking        Booking  @relation(fields: [bookingId], references: [id], onDelete: Cascade)
+
+  @@index([updatedAt])
 }
 
 model Inquiry {

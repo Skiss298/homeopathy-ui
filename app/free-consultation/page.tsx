@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { isValidEmail, isValidIndianPhone } from "@/lib/validation";
+import { isValidEmail, isValidIndianPhone, parseAndValidateAge } from "@/lib/validation";
 
 type SlotStatus = "AVAILABLE" | "BOOKED" | "UNAVAILABLE";
 
@@ -35,6 +35,7 @@ export default function FreeConsultationPage() {
   const [slots, setSlots] = useState<Slot[]>([]);
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [loading, setLoading] = useState(false);
@@ -70,6 +71,11 @@ export default function FreeConsultationPage() {
       setError("Please enter a valid email address.");
       return;
     }
+    const ageValue = parseAndValidateAge(age);
+    if (ageValue === null) {
+      setError("Please enter a valid age.");
+      return;
+    }
     if (!isValidIndianPhone(phone)) {
       setError("Please enter a valid mobile number.");
       return;
@@ -85,6 +91,7 @@ export default function FreeConsultationPage() {
           date,
           startUtc: selectedSlot.startUtc,
           name,
+          age: ageValue,
           email,
           phone,
         }),
@@ -199,6 +206,20 @@ export default function FreeConsultationPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder="you@email.com"
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-sm text-charcoal/70">Age</label>
+                <input
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
+                  placeholder="Your age"
+                  min={0}
+                  max={120}
+                  inputMode="numeric"
                   required
                 />
               </div>

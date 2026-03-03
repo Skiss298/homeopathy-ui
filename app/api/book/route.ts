@@ -1,7 +1,12 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { buildSlotsForDate } from "@/lib/slots";
-import { isValidEmail, isValidIndianPhone, normalizePhone } from "@/lib/validation";
+import {
+  isValidEmail,
+  isValidIndianPhone,
+  normalizePhone,
+  parseAndValidateAge,
+} from "@/lib/validation";
 
 export const runtime = "nodejs";
 
@@ -15,11 +20,12 @@ export async function POST(request: Request) {
 
   const { date, startUtc } = body;
   const name = typeof body.name === "string" ? body.name.trim() : "";
+  const age = parseAndValidateAge(body.age);
   const email = typeof body.email === "string" ? body.email.trim() : "";
   const phoneRaw = typeof body.phone === "string" ? body.phone.trim() : "";
-  if (!name || !email || !phoneRaw) {
+  if (!name || age === null || !email || !phoneRaw) {
     return NextResponse.json(
-      { error: "name, email, and phone are required" },
+      { error: "name, age, email, and phone are required" },
       { status: 400 }
     );
   }
@@ -64,6 +70,7 @@ export async function POST(request: Request) {
       startTime: slot.startUtc,
       endTime: slot.endUtc,
       name,
+      age,
       email,
       phone,
       status: "HOLD",

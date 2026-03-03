@@ -5,7 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { useLanguage } from "@/components/LanguageProvider";
 import { useRouter } from "next/navigation";
-import { isValidEmail, isValidIndianPhone } from "@/lib/validation";
+import { isValidEmail, isValidIndianPhone, parseAndValidateAge } from "@/lib/validation";
 
 type SlotStatus = "AVAILABLE" | "BOOKED" | "UNAVAILABLE";
 
@@ -98,6 +98,7 @@ export default function BookPage() {
   const [loading, setLoading] = useState(false);
   const [selectedSlot, setSelectedSlot] = useState<Slot | null>(null);
   const [name, setName] = useState("");
+  const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [error, setError] = useState("");
@@ -143,6 +144,11 @@ export default function BookPage() {
       setError("Please enter a valid email address.");
       return null;
     }
+    const ageValue = parseAndValidateAge(age);
+    if (ageValue === null) {
+      setError("Please enter a valid age.");
+      return null;
+    }
     if (!isValidIndianPhone(phone)) {
       setError("Please enter a valid mobile number.");
       return null;
@@ -157,6 +163,7 @@ export default function BookPage() {
           date,
           startUtc: selectedSlot.startUtc,
           name,
+          age: ageValue,
           email,
           phone,
         }),
@@ -361,6 +368,20 @@ export default function BookPage() {
                   onChange={(e) => setEmail(e.target.value)}
                   className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
                   placeholder={t("book.emailPlaceholder")}
+                  required
+                />
+              </div>
+              <div>
+                <label className="text-sm text-charcoal/70">Age</label>
+                <input
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-4 py-2 outline-none focus:border-forest"
+                  placeholder="Your age"
+                  min={0}
+                  max={120}
+                  inputMode="numeric"
                   required
                 />
               </div>

@@ -2,7 +2,12 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { buildSlotsForDate } from "@/lib/slots";
 import { sendEmail, sendSms } from "@/lib/notifications";
-import { isValidEmail, isValidIndianPhone, normalizePhone } from "@/lib/validation";
+import {
+  isValidEmail,
+  isValidIndianPhone,
+  normalizePhone,
+  parseAndValidateAge,
+} from "@/lib/validation";
 import { getClinicWhatsappNumber, getGoogleMeetLink } from "@/lib/consultation";
 import { createConsultationMeeting } from "@/lib/google-calendar";
 
@@ -16,10 +21,11 @@ export async function POST(request: Request) {
 
   const { date, startUtc } = body;
   const name = typeof body.name === "string" ? body.name.trim() : "";
+  const age = parseAndValidateAge(body.age);
   const email = typeof body.email === "string" ? body.email.trim() : "";
   const phoneRaw = typeof body.phone === "string" ? body.phone.trim() : "";
-  if (!name || !email || !phoneRaw) {
-    return NextResponse.json({ error: "name, email, and phone are required" }, { status: 400 });
+  if (!name || age === null || !email || !phoneRaw) {
+    return NextResponse.json({ error: "name, age, email, and phone are required" }, { status: 400 });
   }
   if (!isValidEmail(email)) {
     return NextResponse.json({ error: "invalid email address" }, { status: 400 });
@@ -61,6 +67,7 @@ export async function POST(request: Request) {
       startTime: slot.startUtc,
       endTime: slot.endUtc,
       name,
+      age,
       email,
       phone,
       status: "CONFIRMED",
