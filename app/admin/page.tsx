@@ -40,7 +40,6 @@ export default function AdminDashboardPage() {
   const [filterDate, setFilterDate] = useState("");
   const [filterName, setFilterName] = useState("");
   const [filterPhone, setFilterPhone] = useState("");
-  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [caseSummary, setCaseSummary] = useState("");
   const [medicationPlan, setMedicationPlan] = useState("");
   const [loading, setLoading] = useState(true);
@@ -157,7 +156,7 @@ export default function AdminDashboardPage() {
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           <div>
             <label className="text-sm text-charcoal/70">Date</label>
-            <div className="relative mt-1 flex gap-2">
+            <div className="mt-1 flex gap-2">
               <input
                 type="text"
                 value={filterDate}
@@ -169,31 +168,24 @@ export default function AdminDashboardPage() {
                 type="button"
                 className="btn-outline whitespace-nowrap"
                 onClick={() => {
-                  setIsCalendarOpen((value) => !value);
+                  if (calendarInputRef.current?.showPicker) {
+                    calendarInputRef.current.showPicker();
+                  } else {
+                    calendarInputRef.current?.focus();
+                  }
                 }}
               >
                 Calendar
               </button>
-              {isCalendarOpen && (
-                <div className="absolute top-12 z-10 w-72 rounded-xl border border-sage/60 bg-white p-3 shadow-soft">
-                  <input
-                    ref={calendarInputRef}
-                    type="date"
-                    value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
-                    onChange={(e) => setFilterDate(e.target.value)}
-                    className="w-full rounded-lg border border-sage/60 px-3 py-2 outline-none focus:border-forest"
-                  />
-                  <div className="mt-2 flex justify-end">
-                    <button
-                      type="button"
-                      className="text-sm text-charcoal/70 underline"
-                      onClick={() => setIsCalendarOpen(false)}
-                    >
-                      Close
-                    </button>
-                  </div>
-                </div>
-              )}
+              <input
+                ref={calendarInputRef}
+                type="date"
+                value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
+                onChange={(e) => setFilterDate(e.target.value)}
+                className="sr-only"
+                tabIndex={-1}
+                aria-hidden="true"
+              />
             </div>
           </div>
           <div>
