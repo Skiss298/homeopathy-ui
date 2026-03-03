@@ -14,12 +14,20 @@ export async function GET() {
     orderBy: { startTime: "desc" },
     include: {
       caseSheet: true,
+      patient: {
+        select: {
+          id: true,
+          patientCode: true,
+        },
+      },
     },
   });
 
   return NextResponse.json({
     bookings: bookings.map((booking) => ({
       id: booking.id,
+      patientId: booking.patient?.id ?? null,
+      patientCode: booking.patient?.patientCode ?? null,
       name: booking.name ?? "",
       age: booking.age,
       email: booking.email ?? "",

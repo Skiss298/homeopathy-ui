@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 
 type Booking = {
   id: string;
+  patientId: string | null;
+  patientCode: string | null;
   name: string;
   age: number | null;
   email: string;
@@ -248,6 +250,7 @@ export default function AdminDashboardPage() {
                 >
                   <p className="font-medium text-charcoal">{booking.name || "Patient"}</p>
                   <p className="text-xs text-charcoal/70">{formatIst(booking.startTime)}</p>
+                  <p className="text-xs text-charcoal/70">Patient ID: {booking.patientCode ?? "-"}</p>
                   <p className="text-xs text-charcoal/70">Phone: {booking.phone || "-"}</p>
                   <p className="text-xs text-charcoal/70">Age: {booking.age ?? "-"}</p>
                   <p className="mt-1 text-xs font-medium text-emerald-700">Status: {booking.status}</p>
@@ -264,6 +267,9 @@ export default function AdminDashboardPage() {
           ) : (
             <>
               <div className="mt-4 grid gap-2 text-sm text-charcoal/80 sm:grid-cols-2">
+                <p>
+                  <span className="font-medium">Patient ID:</span> {selectedBooking.patientCode ?? "-"}
+                </p>
                 <p>
                   <span className="font-medium">Name:</span> {selectedBooking.name || "-"}
                 </p>

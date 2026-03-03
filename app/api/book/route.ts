@@ -5,8 +5,10 @@ import {
   isValidEmail,
   isValidIndianPhone,
   normalizePhone,
+  normalizeIndianPhoneCanonical,
   parseAndValidateAge,
 } from "@/lib/validation";
+import { upsertPatientByPhone } from "@/lib/patient";
 
 export const runtime = "nodejs";
 
@@ -36,6 +38,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: "invalid phone number" }, { status: 400 });
   }
   const phone = normalizePhone(phoneRaw);
+  const phoneCanonical = normalizeIndianPhoneCanonical(phoneRaw);
+  if (!phoneCanonical) {
+    return NextResponse.json({ error: "invalid phone number format" }, { status: 400 });
+  }
 
   const slots = buildSlotsForDate(date);
   const slot = slots.find((s) => s.startUtc.toISOString() === startUtc);
@@ -65,10 +71,18 @@ export async function POST(request: Request) {
   }
 
   const holdExpires = new Date(now.getTime() + HOLD_MINUTES * 60 * 1000);
+  const patient = await upsertPatientByPhone({
+    name,
+    age,
+    email,
+    phoneCanonical,
+  });
+
   const booking = await prisma.booking.create({
     data: {
       startTime: slot.startUtc,
       endTime: slot.endUtc,
+      patientId: patient.id,
       name,
       age,
       email,

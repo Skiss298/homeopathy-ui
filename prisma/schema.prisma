@@ -23,6 +23,7 @@ model Booking {
   id          String        @id @default(cuid())
   startTime   DateTime
   endTime     DateTime
+  patientId   String?
   name        String?
   age         Int?
   email       String?
@@ -36,11 +37,27 @@ model Booking {
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
   caseSheet   CaseSheet?
+  patient     Patient?      @relation(fields: [patientId], references: [id], onDelete: SetNull)
 
   @@index([startTime])
   @@index([status])
   @@index([holdExpires])
   @@index([razorpayOrderId])
+  @@index([patientId])
+}
+
+model Patient {
+  id          String    @id @default(cuid())
+  patientCode String    @unique
+  name        String?
+  age         Int?
+  email       String?
+  phone       String    @unique
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookings    Booking[]
+
+  @@index([createdAt])
 }
 
 model CaseSheet {
