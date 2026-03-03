@@ -1105,7 +1105,170 @@ const hi: Record<string, string> = {
   "queries.whatToExpectBody": "हम आपके प्रश्न की समीक्षा कर एक कार्यदिवस में उत्तर देंगे।",
 };
 
-const kn: Record<string, string> = {};
+const kn: Record<string, string> = {
+  "nav.home": "ಮುಖಪುಟ",
+  "nav.about": "ನಮ್ಮ ಬಗ್ಗೆ",
+  "nav.services": "ನಾವು ನೀಡುವ ಸೇವೆಗಳು",
+  "nav.contact": "ಸಂಪರ್ಕಿಸಿ",
+  "nav.book": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ಬುಕ್ ಮಾಡಿ",
+  "nav.freeConsultation": "ಉಚಿತ ಸಲಹೆ",
+  "nav.queriesFeedback": "ಪ್ರಶ್ನೆಗಳು/ಅಭಿಪ್ರಾಯ",
+  "nav.connect": "ನಮ್ಮೊಂದಿಗೆ ಸಂಪರ್ಕಿಸಿ",
+  "nav.patientLogin": "ರೋಗಿ ಲಾಗಿನ್",
+  "nav.selectLanguage": "ಭಾಷೆಯನ್ನು ಆಯ್ಕೆಮಾಡಿ",
+
+  "hero.titleLine1": "ಮೃದುವಾದ, ವೈಯಕ್ತಿಕ",
+  "hero.titleLine2": "ಹೋಮಿಯೋಪಥಿ ಆರೈಕೆ",
+  "hero.subtitle":
+    "ಸಮಗ್ರ, ವೈಯಕ್ತಿಕ ಚಿಕಿತ್ಸೆ ಮತ್ತು ಕಡಿಮೆ ಪಕ್ಕ ಪರಿಣಾಮಗಳೊಂದಿಗೆ ಆನ್‌ಲೈನ್ ಸಲಹೆಗಳು.",
+  "hero.book": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ಬುಕ್ ಮಾಡಿ",
+  "hero.learnMore": "ಇನ್ನಷ್ಟು ತಿಳಿಯಿರಿ",
+  "hero.slideLabel": "ಸ್ಲೈಡ್ {number} ಗೆ ಹೋಗಿ",
+  "hero.alt.homeopathyCare": "ಹೋಮಿಯೋಪಥಿ ಆರೈಕೆ",
+  "hero.alt.naturalHealing": "ಸ್ವಾಭಾವಿಕ ಚಿಕಿತ್ಸಾ ವಿಧಾನ",
+
+  "home.about.title": "ನಮ್ಮ ಬಗ್ಗೆ",
+  "home.about.body":
+    "ನಾವು ದೀರ್ಘಕಾಲಿಕ ಆರೋಗ್ಯದ ಮೇಲೆ ಕೇಂದ್ರೀಕೃತವಾದ ವೈಯಕ್ತಿಕ ಹೋಮಿಯೋಪಥಿ ಆರೈಕೆಯನ್ನು ಒದಗಿಸುತ್ತೇವೆ. ನಮ್ಮ ಸಲಹೆಗಳು ಗಮನಯುತ, ಗೌಪ್ಯ ಹಾಗೂ ನಿಮ್ಮ ಸಂಪೂರ್ಣ ಆರೋಗ್ಯ ಚಿತ್ರವನ್ನು ಅರ್ಥಮಾಡಿಕೊಂಡು ಯೋಜನೆ ನೀಡುವಂತಿವೆ.",
+
+  "home.services.title": "ನಾವು ನೀಡುವ ಸೇವೆಗಳು",
+  "home.services.initialTitle": "ಪ್ರಾಥಮಿಕ ಸಲಹೆ",
+  "home.services.initialBody":
+    "ನಿಮ್ಮ ಲಕ್ಷಣಗಳು, ಇತಿಹಾಸ ಮತ್ತು ಗುರಿಗಳನ್ನು ಅರ್ಥಮಾಡಿಕೊಳ್ಳಲು ವಿವರವಾದ ಮೌಲ್ಯಮಾಪನ.",
+  "home.services.followupTitle": "ಫಾಲೋ-ಅಪ್ ಆರೈಕೆ",
+  "home.services.followupBody": "ನಿರಂತರ ಮಾರ್ಗದರ್ಶನ, ಔಷಧಿ ಹೊಂದಾಣಿಕೆ ಮತ್ತು ಪ್ರಗತಿ ಮೇಲ್ವಿಚಾರಣೆ.",
+  "home.services.onlineTitle": "ಆನ್‌ಲೈನ್ ಸಲಹೆಗಳು",
+  "home.services.onlineBody": "ಸುರಕ್ಷಿತ ಸಂಪರ್ಕದೊಂದಿಗೆ ಅನುಕೂಲಕರ ವರ್ಚುವಲ್ ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್‌ಗಳು.",
+
+  "home.why.title": "ಹೋಮಿಯೋಪಥಿಯನ್ನು ಏಕೆ ಆಯ್ಕೆ ಮಾಡಬೇಕು?",
+  "home.why.body":
+    "ಹೋಮಿಯೋಪಥಿ ವ್ಯಕ್ತಿಯನ್ನೇ ಕೇಂದ್ರವಾಗಿಟ್ಟುಕೊಂಡು ದೇಹದ ಸ್ವಾಭಾವಿಕ ಗುಣಮುಖ ಪ್ರತಿಕ್ರಿಯೆಯನ್ನು ಉತ್ತೇಜಿಸಲು ಪ್ರಯತ್ನಿಸುತ್ತದೆ. ಇದು ಮೃದುವಾದ, ಸಮಗ್ರ ಚಿಕಿತ್ಸೆ ಆಗಿದ್ದು ಇತರೆ ಚಿಕಿತ್ಸೆಗಳ ಜೊತೆಯಲ್ಲೂ ಸಹಾಯಕವಾಗಬಹುದು. ನಮ್ಮ ಆನ್‌ಲೈನ್ ಸಲಹೆಗಳು ಸುಲಭ ಮತ್ತು ಗೌಪ್ಯ.",
+
+  "scroll.holisticTitle": "ಸಮಗ್ರ, ವ್ಯಕ್ತಿ-ಕೇಂದ್ರೀಕೃತ ಆರೈಕೆ",
+  "scroll.holisticBody":
+    "ದೇಹ, ಮನಸ್ಸು ಮತ್ತು ಜೀವನಶೈಲಿಯ ಸಮಗ್ರ ಲಕ್ಷಣಗಳನ್ನು ಪರಿಗಣಿಸಿ ನಿಮ್ಮಿಗೆ ಹೊಂದುವ ಚಿಕಿತ್ಸಾ ಯೋಜನೆ ನೀಡುತ್ತೇವೆ.",
+  "scroll.minSideEffectsTitle": "ಕಡಿಮೆ ಪಕ್ಕ ಪರಿಣಾಮಗಳು",
+  "scroll.minSideEffectsBody":
+    "ಹೋಮಿಯೋಪಥಿ ಔಷಧಿಗಳು ಸಾಮಾನ್ಯವಾಗಿ ಮೃದುವಾಗಿದ್ದು ಸಹನೀಯವಾಗಿರುತ್ತವೆ; ವಿಭಿನ್ನ ವಯಸ್ಸಿನವರಿಗೆ ಸೂಕ್ತ.",
+  "scroll.clearGuidanceTitle": "ಸಲಹೆಯ ನಂತರ ಸ್ಪಷ್ಟ ಮಾರ್ಗದರ್ಶನ",
+  "scroll.clearGuidanceBody":
+    "ನಿಮ್ಮ ರೋಗಿ ಪೋರ್ಟಲ್‌ನಲ್ಲಿ ಸ್ಪಷ್ಟ ಔಷಧ ಪತ್ರಿಕೆ ಮತ್ತು ಸಲಹೆ ಟಿಪ್ಪಣಿಗಳು ಲಭ್ಯವಾಗುತ್ತವೆ.",
+  "scroll.bullet1": "ಆನ್‌ಲೈನ್ ವೀಡಿಯೊ ಸಲಹೆ — ಅನುಕೂಲಕರ ಮತ್ತು ಗೌಪ್ಯ",
+  "scroll.bullet2": "ಸ್ಪಷ್ಟ ಔಷಧ ಪತ್ರಿಕೆ ಮತ್ತು ನಂತರದ ಟಿಪ್ಪಣಿಗಳು",
+  "scroll.bullet3": "ಕಡಿಮೆ ಪಕ್ಕ ಪರಿಣಾಮಗಳೊಂದಿಗೆ ಮೃದುವಾದ ಔಷಧಿ",
+
+  "conditions.title": "ನಾವು ಸಾಮಾನ್ಯವಾಗಿ ಸಹಾಯ ಮಾಡುವ ಸ್ಥಿತಿಗಳು",
+  "conditions.cardBody": "ನಿಮಗಾಗಿ ಹೊಂದುವ ಮೃದುವಾದ, ವೈಯಕ್ತಿಕ ಔಷಧಿ.",
+  "conditions.allergies": "ಅಲರ್ಜಿ",
+  "conditions.skin": "ಚರ್ಮ ಸಮಸ್ಯೆಗಳು",
+  "conditions.digestive": "ಜೀರ್ಣಕ್ರಿಯೆ ಸಮಸ್ಯೆಗಳು",
+  "conditions.respiratory": "ಉಸಿರಾಟ ಸಮಸ್ಯೆಗಳು",
+  "conditions.womens": "ಮಹಿಳಾ ಆರೋಗ್ಯ",
+  "conditions.stress": "ಒತ್ತಡ ಮತ್ತು ನಿದ್ರೆ",
+
+  "how.title": "ಹೇಗೆ ಕಾರ್ಯನಿರ್ವಹಿಸುತ್ತದೆ",
+  "how.step1Title": "ಸಮಯ ಆಯ್ಕೆಮಾಡಿ",
+  "how.step1Body": "ನಿಮಗೆ ಅನುಕೂಲಕರವಾದ ವೀಡಿಯೊ ಸಲಹೆ ಸಮಯವನ್ನು ಆಯ್ಕೆಮಾಡಿ.",
+  "how.step2Title": "ಸುರಕ್ಷಿತ ಪಾವತಿ",
+  "how.step2Body": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ದೃಢೀಕರಣಕ್ಕಾಗಿ ಪಾವತಿ ಪೂರ್ಣಗೊಳಿಸಿ.",
+  "how.step3Title": "ವೀಡಿಯೊ ಸಲಹೆ",
+  "how.step3Body": "ಲಿಂಕ್ ಮೂಲಕ ಸೇರಿ; ನಂತರ ನಿಮ್ಮ ಔಷಧ ಪತ್ರಿಕೆ ಪಡೆಯಿರಿ.",
+
+  "home.contact.title": "ಸಂಪರ್ಕಿಸಿ",
+  "home.contact.body": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ಅಥವಾ ಪ್ರಶ್ನೆಗಳಿಗಾಗಿ ನಮ್ಮನ್ನು ಸಂಪರ್ಕಿಸಿ. ನಾವು ಸಹಾಯಕ್ಕೆ ಸಿದ್ಧ.",
+  "home.contact.phone": "ಫೋನ್: +91 8712385456",
+  "home.contact.email": "ಇಮೇಲ್: doctorjagruthi@gmail.com",
+  "home.contact.hours": "ಸಮಯ: ಸೋಮ–ಶನಿ, ಬೆಳಿಗ್ಗೆ 9:00–ಸಂಜೆ 6:00",
+
+  "footer.copyright": "© {year} ಡಾ. ಸಾಯಿ ಜಾಗೃತಿ ಹೋಮಿಯೋಪಥಿ ಕ್ಲಿನಿಕ್",
+  "footer.privacy": "ಗೌಪ್ಯತಾ ನೀತಿ",
+  "footer.terms": "ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳು",
+  "footer.contact": "ಸಂಪರ್ಕ",
+
+  "about.title": "ಡಾ. ಸಾಯಿ ಜಾಗೃತಿ ಅವರ ಸಂದೇಶ",
+  "about.p1":
+    "ಹೋಮಿಯೋಪಥಿ ಸದಾ ನನ್ನಿಗೆ ದಯಾಮಯ ಗುಣಮುಖ ಮಾರ್ಗವಾಗಿದೆ. ದೇಹವನ್ನು ಕಠಿಣ ರಾಸಾಯನಿಕಗಳಿಂದ ಹಾನಿಗೊಳಿಸದೆ ಸ್ವಾಭಾವಿಕ ಚಿಕಿತ್ಸೆಯನ್ನು ನೀಡುವುದರಿಂದ ನಾನು ಇದನ್ನು ಆಯ್ಕೆ ಮಾಡಿಕೊಂಡೆ.",
+  "about.p2":
+    "ನನ್ನ ವಿಧಾನ ವೈಯಕ್ತಿಕ ಮತ್ತು ಪಾರದರ್ಶಕ. ಕಾರ್ಪೊರೇಟ್ ಆಸ್ಪತ್ರೆಗಳಂತೆ ಪ್ಯಾಕೇಜ್ ಆಧಾರಿತ ದೀರ್ಘಕಾಲದ ಔಷಧ ಯೋಜನೆಗಳನ್ನು ಒತ್ತಾಯಿಸುವುದಿಲ್ಲ. ಪ್ರತಿ ರೋಗಿಗೂ ಅವರ ಕಥೆಗೆ ತಕ್ಕ ಯೋಜನೆ ದೊರಕಬೇಕು.",
+  "about.p3":
+    "ನಾನು ನನ್ನ ಮೆಡಿಕಲ್ ಕಾಲೇಜಿನ ಗೋಲ್ಡ್ ಮೆಡಲಿಸ್ಟ್ ಆಗಿದ್ದು ಹಲವು ಆಸ್ಪತ್ರೆಗಳಲ್ಲಿ 7 ವರ್ಷಗಳ ಅನುಭವ ಹೊಂದಿದ್ದೇನೆ. ಆ ಅನುಭವವೇ ಮೃದುವಾದ, ನೀತಿಯುತ ಮತ್ತು ರೋಗಿ-ಕೇಂದ್ರೀಕೃತ ಆರೈಕೆಗೆ ನನ್ನ ಬದ್ಧತೆಯನ್ನು ಬಲಪಡಿಸಿದೆ.",
+  "about.thankYou": "ಧನ್ಯವಾದಗಳು",
+  "about.imageAlt": "ಡಾ. ಸಾಯಿ ಜಾಗೃತಿ",
+
+  "book.title": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ಬುಕ್ ಮಾಡಿ",
+  "book.subtitle":
+    "ದಿನಾಂಕ ಆಯ್ಕೆಮಾಡಿ ಮತ್ತು ಲಭ್ಯತೆ ಪರಿಶೀಲಿಸಿ. ಸ್ಲಾಟ್‌ಗಳು IST ಪ್ರಕಾರ ಬೆಳಿಗ್ಗೆ 10:00 ರಿಂದ ಸಂಜೆ 6:00 ವರೆಗೆ (1:00–2:00 ಮಧ್ಯಾಹ್ನ ವಿರಾಮ).",
+  "book.widgetTitle": "ಟೆಲಿಕನ್ಸಲ್ಟೇಶನ್ ಬುಕ್ ಮಾಡಿ",
+  "book.widgetBody": "15–20 ನಿಮಿಷಗಳ ಆನ್‌ಲೈನ್ ಸೆಷನ್. ಅನುಕೂಲಕರ ದಿನಾಂಕ ಮತ್ತು ಸಮಯ ಆಯ್ಕೆ ಮಾಡಿ ಸುರಕ್ಷಿತವಾಗಿ ಪಾವತಿಸಿ.",
+  "book.widgetFooter": "Razorpay ಮೂಲಕ ಸುರಕ್ಷಿತ ಪಾವತಿ. ಇಮೇಲ್/SMS ನೆನಪಿನ ಸೂಚನೆಗಳು ಸೇರಿವೆ.",
+  "book.checkAvailability": "ಲಭ್ಯತೆ ಪರಿಶೀಲಿಸಿ",
+  "book.date": "ದಿನಾಂಕ",
+  "book.checking": "ಪರಿಶೀಲಿಸಲಾಗುತ್ತಿದೆ...",
+  "book.checkAvailabilityButton": "ಲಭ್ಯತೆ ಪರಿಶೀಲಿಸಿ",
+  "book.noSlots": "ದಿನಾಂಕ ಆಯ್ಕೆ ಮಾಡಿ “ಲಭ್ಯತೆ ಪರಿಶೀಲಿಸಿ” ಕ್ಲಿಕ್ ಮಾಡಿ.",
+  "book.yourDetails": "ನಿಮ್ಮ ವಿವರಗಳು",
+  "book.fullName": "ಪೂರ್ಣ ಹೆಸರು",
+  "book.fullNamePlaceholder": "ನಿಮ್ಮ ಹೆಸರು",
+  "book.email": "ಇಮೇಲ್",
+  "book.emailPlaceholder": "you@email.com",
+  "book.phone": "ಫೋನ್ ಸಂಖ್ಯೆ",
+  "book.phonePlaceholder": "+91 8712385456",
+  "book.holdSlot": "ಸ್ಲಾಟ್ ಹಿಡಿದುಿಡಿ (10 ನಿಮಿಷ)",
+  "book.selectSlotToContinue": "ಮುಂದುವರಿಯಲು ಸ್ಲಾಟ್ ಆಯ್ಕೆಮಾಡಿ",
+  "book.slotHeld": "ಸ್ಲಾಟ್ {time} IST ವರೆಗೆ ಹಿಡಿದಿಡಲಾಗಿದೆ. ದೃಢೀಕರಿಸಲು ಪಾವತಿ ಪೂರ್ಣಗೊಳಿಸಿ.",
+  "book.openingPayment": "ಪಾವತಿ ತೆರೆಯಲಾಗುತ್ತಿದೆ...",
+  "book.payToConfirm": "ದೃಢೀಕರಣಕ್ಕೆ ₹100 ಪಾವತಿಸಿ",
+  "book.paymentSuccess": "ಪಾವತಿ ಯಶಸ್ವಿ. ನಿಮ್ಮ ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್ ದೃಢವಾಗಿದೆ.",
+  "book.paymentFailed": "ಪಾವತಿ ಪೂರ್ಣಗೊಂಡಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "book.confirmationTitle": "ಬುಕಿಂಗ್ ದೃಢೀಕರಣ",
+  "book.confirmationBookingId": "ಬುಕಿಂಗ್ ಐಡಿ: {value}",
+  "book.confirmationAppointment": "ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್: {value}",
+  "book.confirmationName": "ರೋಗಿಯ ಹೆಸರು: {value}",
+  "book.confirmationEmail": "ಇಮೇಲ್: {value}",
+  "book.confirmationPhone": "ಫೋನ್: {value}",
+  "book.confirmationOrderId": "Razorpay ಆರ್ಡರ್ ಐಡಿ: {value}",
+  "book.confirmationPaymentId": "Razorpay ಪಾವತಿ ಐಡಿ: {value}",
+  "book.razorpayNotConfigured": "Razorpay ಇನ್ನೂ ಸಂರಚನೆಗೊಂಡಿಲ್ಲ. ಕೀಗಳನ್ನು ಸೇರಿಸಿ.",
+  "book.errorFetchSlots": "ಸ್ಲಾಟ್‌ಗಳನ್ನು ಪಡೆಯಲು ವಿಫಲ",
+  "book.errorHoldSlot": "ಸ್ಲಾಟ್ ಹಿಡಿದಿಡಲು ವಿಫಲ",
+  "book.errorCreateOrder": "ಆರ್ಡರ್ ರಚಿಸಲು ವಿಫಲ",
+  "book.errorRazorpayNotLoaded": "Razorpay SDK ಲೋಡ್ ಆಗಿಲ್ಲ. ದಯವಿಟ್ಟು ಮತ್ತೆ ಪ್ರಯತ್ನಿಸಿ.",
+  "book.errorPaymentVerification": "ಪಾವತಿ ಪರಿಶೀಲನೆ ವಿಫಲ",
+  "book.errorPaymentFailed": "ಪಾವತಿ ವಿಫಲ",
+
+  "contact.title": "ಸಂಪರ್ಕಿಸಿ",
+  "contact.subtitle":
+    "ನಾವು ಸಹಾಯಕ್ಕೆ ಸಿದ್ಧವಾಗಿದ್ದೇವೆ. ಅಪಾಯಿಂಟ್‌ಮೆಂಟ್, ಉಚಿತ ಸಲಹೆ, ಪ್ರಶ್ನೆ ಅಥವಾ ಅಭಿಪ್ರಾಯಕ್ಕಾಗಿ ಸಂಪರ್ಕಿಸಿ.",
+  "contact.clinicContact": "ಕ್ಲಿನಿಕ್ ಸಂಪರ್ಕ",
+  "contact.connectWithUs": "ನಮ್ಮೊಂದಿಗೆ ಸಂಪರ್ಕದಲ್ಲಿರಿ",
+  "contact.connectBody":
+    "ನಿಮ್ಮ ಆರೋಗ್ಯ ಸಮಸ್ಯೆಗಳು ಮತ್ತು ನೀವು ಬಯಸುವ ಸಲಹೆ ಸಮಯವನ್ನು ಹಂಚಬಹುದು. ನಮ್ಮ ತಂಡ ಶೀಘ್ರದಲ್ಲಿ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತದೆ.",
+  "contact.requestConsultation": "ಸಲಹೆಗಾಗಿ ವಿನಂತಿಸಿ",
+  "contact.fullName": "ಪೂರ್ಣ ಹೆಸರು",
+  "contact.fullNamePlaceholder": "ನಿಮ್ಮ ಹೆಸರು",
+  "contact.email": "ಇಮೇಲ್",
+  "contact.emailPlaceholder": "you@email.com",
+  "contact.phone": "ಫೋನ್ ಸಂಖ್ಯೆ",
+  "contact.phonePlaceholder": "+91 8712385456",
+  "contact.message": "ಸಂದೇಶ",
+  "contact.messagePlaceholder": "ನಾವು ಹೇಗೆ ಸಹಾಯ ಮಾಡಬಹುದು ತಿಳಿಸಿ",
+  "contact.consent":
+    "ನಾನು ನಿಯಮಗಳು ಮತ್ತು ಷರತ್ತುಗಳಿಗೆ ಒಪ್ಪುತ್ತೇನೆ ಹಾಗೂ ಕ್ಲಿನಿಕ್ ನನ್ನನ್ನು ಸಂಪರ್ಕಿಸಲು ಅನುಮತಿಸುತ್ತೇನೆ.",
+  "contact.submitRequest": "ವಿನಂತಿ ಸಲ್ಲಿಸಿ",
+  "contact.phoneLine": "ಫೋನ್: +91 8712385456",
+  "contact.emailLine": "ಇಮೇಲ್: doctorjagruthi@gmail.com",
+  "contact.hoursLine": "ಸಮಯ: ಸೋಮ–ಶನಿ, ಬೆಳಿಗ್ಗೆ 9:00–ಸಂಜೆ 6:00",
+
+  "queries.title": "ಪ್ರಶ್ನೆಗಳು ಮತ್ತು ಅಭಿಪ್ರಾಯ",
+  "queries.subtitle": "ನಿಮ್ಮ ಪ್ರಶ್ನೆ ಅಥವಾ ಅಭಿಪ್ರಾಯವನ್ನು ಹಂಚಿ; ನಾವು ಶೀಘ್ರದಲ್ಲೇ ಪ್ರತಿಕ್ರಿಯಿಸುತ್ತೇವೆ.",
+  "queries.yourDetails": "ನಿಮ್ಮ ವಿವರಗಳು",
+  "queries.queryLabel": "ಪ್ರಶ್ನೆ / ಅಭಿಪ್ರಾಯ",
+  "queries.queryPlaceholder": "ನಿಮ್ಮ ಸಂದೇಶವನ್ನು ಇಲ್ಲಿ ಬರೆಯಿರಿ",
+  "queries.submit": "ಸಲ್ಲಿಸಿ",
+  "queries.contactDetails": "ಸಂಪರ್ಕ ವಿವರಗಳು",
+  "queries.whatToExpect": "ಏನು ನಿರೀಕ್ಷಿಸಬಹುದು",
+  "queries.whatToExpectBody": "ನಾವು ನಿಮ್ಮ ಪ್ರಶ್ನೆಯನ್ನು ಪರಿಶೀಲಿಸಿ ಒಂದು ಕೆಲಸದ ದಿನದೊಳಗೆ ಉತ್ತರಿಸುತ್ತೇವೆ.",
+};
 
 const translations: Record<string, Record<string, string>> = {
   en,
