@@ -1,12 +1,9 @@
-export type Language = "en" | "te" | "ml" | "ta" | "mr" | "bn" | "hi";
+export type Language = "en" | "te" | "kn" | "hi";
 
 export const LANGUAGES: Array<{ code: Language; label: string }> = [
   { code: "en", label: "English" },
   { code: "te", label: "Telugu" },
-  { code: "ml", label: "Malayalam" },
-  { code: "ta", label: "Tamil" },
-  { code: "mr", label: "Marathi" },
-  { code: "bn", label: "Bengali" },
+  { code: "kn", label: "Kannada" },
   { code: "hi", label: "Hindi" },
 ];
 
@@ -1108,13 +1105,16 @@ const hi: Record<string, string> = {
   "queries.whatToExpectBody": "हम आपके प्रश्न की समीक्षा कर एक कार्यदिवस में उत्तर देंगे।",
 };
 
-const translations: Record<Language, Record<string, string>> = {
+const kn: Record<string, string> = {};
+
+const translations: Record<string, Record<string, string>> = {
   en,
   te,
   ml,
   ta,
   mr,
   bn,
+  kn,
   hi,
 };
 
