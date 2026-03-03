@@ -40,6 +40,7 @@ export default function AdminDashboardPage() {
   const [filterDate, setFilterDate] = useState("");
   const [filterName, setFilterName] = useState("");
   const [filterPhone, setFilterPhone] = useState("");
+  const [isCalendarOpen, setIsCalendarOpen] = useState(false);
   const [caseSummary, setCaseSummary] = useState("");
   const [medicationPlan, setMedicationPlan] = useState("");
   const [loading, setLoading] = useState(true);
@@ -168,28 +169,26 @@ export default function AdminDashboardPage() {
                 type="button"
                 className="btn-outline whitespace-nowrap"
                 onClick={() => {
-                  if (calendarInputRef.current?.showPicker) {
-                    calendarInputRef.current.showPicker();
-                  } else {
-                    calendarInputRef.current?.focus();
-                  }
+                  setIsCalendarOpen((value) => !value);
                 }}
               >
                 Calendar
               </button>
-              <input
-                ref={calendarInputRef}
-                type="date"
-                value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
-                onChange={(e) => {
-                  setFilterDate(e.target.value);
-                  calendarInputRef.current?.blur();
-                }}
-                className="sr-only"
-                tabIndex={-1}
-                aria-hidden="true"
-              />
             </div>
+            {isCalendarOpen && (
+              <div className="mt-2 w-72 rounded-xl border border-sage/60 bg-white p-3 shadow-soft">
+                <input
+                  ref={calendarInputRef}
+                  type="date"
+                  value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
+                  onChange={(e) => {
+                    setFilterDate(e.target.value);
+                    setIsCalendarOpen(false);
+                  }}
+                  className="w-full rounded-lg border border-sage/60 px-3 py-2 outline-none focus:border-forest"
+                />
+              </div>
+            )}
           </div>
           <div>
             <label className="text-sm text-charcoal/70">Patient Name</label>
