@@ -181,7 +181,10 @@ export default function AdminDashboardPage() {
                 ref={calendarInputRef}
                 type="date"
                 value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
-                onChange={(e) => setFilterDate(e.target.value)}
+                onChange={(e) => {
+                  setFilterDate(e.target.value);
+                  calendarInputRef.current?.blur();
+                }}
                 className="sr-only"
                 tabIndex={-1}
                 aria-hidden="true"
