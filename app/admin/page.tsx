@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 
 type Booking = {
@@ -46,6 +46,7 @@ export default function AdminDashboardPage() {
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
+  const calendarInputRef = useRef<HTMLInputElement | null>(null);
 
   const selectedBooking = useMemo(
     () => bookings.find((booking) => booking.id === selectedBookingId) ?? null,
@@ -55,12 +56,13 @@ export default function AdminDashboardPage() {
   const filteredBookings = useMemo(() => {
     const nameQuery = filterName.trim().toLowerCase();
     const phoneQuery = filterPhone.trim();
+    const dateQuery = filterDate.trim();
 
     return bookings.filter((booking) => {
       const bookingDateIst = new Date(booking.startTime).toLocaleDateString("en-CA", {
         timeZone: "Asia/Kolkata",
       });
-      const matchesDate = !filterDate || bookingDateIst === filterDate;
+      const matchesDate = !dateQuery || bookingDateIst.includes(dateQuery);
       const matchesName = !nameQuery || booking.name.toLowerCase().includes(nameQuery);
       const matchesPhone = !phoneQuery || booking.phone.includes(phoneQuery);
       return matchesDate && matchesName && matchesPhone;
@@ -153,13 +155,38 @@ export default function AdminDashboardPage() {
         <h2 className="text-lg font-semibold">Quick Filters</h2>
         <div className="mt-3 grid gap-3 md:grid-cols-3">
           <div>
-            <label className="text-sm text-charcoal/70">Date (IST)</label>
-            <input
-              type="date"
-              value={filterDate}
-              onChange={(e) => setFilterDate(e.target.value)}
-              className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-3 py-2 outline-none focus:border-forest"
-            />
+            <label className="text-sm text-charcoal/70">Date</label>
+            <div className="mt-1 flex gap-2">
+              <input
+                type="text"
+                value={filterDate}
+                onChange={(e) => setFilterDate(e.target.value)}
+                placeholder="YYYY-MM-DD"
+                className="w-full rounded-xl border border-sage/60 bg-white px-3 py-2 outline-none focus:border-forest"
+              />
+              <button
+                type="button"
+                className="btn-outline whitespace-nowrap"
+                onClick={() => {
+                  if (calendarInputRef.current?.showPicker) {
+                    calendarInputRef.current.showPicker();
+                  } else {
+                    calendarInputRef.current?.focus();
+                  }
+                }}
+              >
+                Calendar
+              </button>
+              <input
+                ref={calendarInputRef}
+                type="date"
+                value={/^\d{4}-\d{2}-\d{2}$/.test(filterDate) ? filterDate : ""}
+                onChange={(e) => setFilterDate(e.target.value)}
+                className="sr-only"
+                tabIndex={-1}
+                aria-hidden="true"
+              />
+            </div>
           </div>
           <div>
             <label className="text-sm text-charcoal/70">Patient Name</label>
