@@ -37,6 +37,9 @@ export default function AdminDashboardPage() {
   const router = useRouter();
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [selectedBookingId, setSelectedBookingId] = useState("");
+  const [filterDate, setFilterDate] = useState("");
+  const [filterName, setFilterName] = useState("");
+  const [filterPhone, setFilterPhone] = useState("");
   const [caseSummary, setCaseSummary] = useState("");
   const [medicationPlan, setMedicationPlan] = useState("");
   const [loading, setLoading] = useState(true);
@@ -48,6 +51,21 @@ export default function AdminDashboardPage() {
     () => bookings.find((booking) => booking.id === selectedBookingId) ?? null,
     [bookings, selectedBookingId]
   );
+
+  const filteredBookings = useMemo(() => {
+    const nameQuery = filterName.trim().toLowerCase();
+    const phoneQuery = filterPhone.trim();
+
+    return bookings.filter((booking) => {
+      const bookingDateIst = new Date(booking.startTime).toLocaleDateString("en-CA", {
+        timeZone: "Asia/Kolkata",
+      });
+      const matchesDate = !filterDate || bookingDateIst === filterDate;
+      const matchesName = !nameQuery || booking.name.toLowerCase().includes(nameQuery);
+      const matchesPhone = !phoneQuery || booking.phone.includes(phoneQuery);
+      return matchesDate && matchesName && matchesPhone;
+    });
+  }, [bookings, filterDate, filterName, filterPhone]);
 
   const fetchBookings = async () => {
     setLoading(true);
@@ -131,16 +149,62 @@ export default function AdminDashboardPage() {
       {error && <p className="mb-4 text-sm text-rose-600">{error}</p>}
       {notice && <p className="mb-4 text-sm text-emerald-700">{notice}</p>}
 
+      <section className="mb-6 rounded-2xl border border-sage/60 bg-white p-4 shadow-soft">
+        <h2 className="text-lg font-semibold">Quick Filters</h2>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          <div>
+            <label className="text-sm text-charcoal/70">Date (IST)</label>
+            <input
+              type="date"
+              value={filterDate}
+              onChange={(e) => setFilterDate(e.target.value)}
+              className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-3 py-2 outline-none focus:border-forest"
+            />
+          </div>
+          <div>
+            <label className="text-sm text-charcoal/70">Patient Name</label>
+            <input
+              type="text"
+              value={filterName}
+              onChange={(e) => setFilterName(e.target.value)}
+              placeholder="Search by name"
+              className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-3 py-2 outline-none focus:border-forest"
+            />
+          </div>
+          <div>
+            <label className="text-sm text-charcoal/70">Mobile Number</label>
+            <input
+              type="text"
+              value={filterPhone}
+              onChange={(e) => setFilterPhone(e.target.value)}
+              placeholder="Search by mobile"
+              className="mt-1 w-full rounded-xl border border-sage/60 bg-white px-3 py-2 outline-none focus:border-forest"
+            />
+          </div>
+        </div>
+        <button
+          type="button"
+          className="mt-3 btn-outline"
+          onClick={() => {
+            setFilterDate("");
+            setFilterName("");
+            setFilterPhone("");
+          }}
+        >
+          Clear Filters
+        </button>
+      </section>
+
       <div className="grid gap-6 lg:grid-cols-[380px_1fr]">
         <section className="rounded-2xl border border-sage/60 bg-white p-4 shadow-soft">
           <h2 className="text-xl font-semibold">Appointments</h2>
           {loading ? (
             <p className="mt-3 text-sm text-charcoal/70">Loading appointments...</p>
-          ) : bookings.length === 0 ? (
+          ) : filteredBookings.length === 0 ? (
             <p className="mt-3 text-sm text-charcoal/70">No appointments found.</p>
           ) : (
             <div className="mt-4 max-h-[70vh] space-y-2 overflow-y-auto pr-1">
-              {bookings.map((booking) => (
+              {filteredBookings.map((booking) => (
                 <button
                   key={booking.id}
                   type="button"
