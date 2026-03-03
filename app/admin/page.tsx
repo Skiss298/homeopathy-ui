@@ -103,6 +103,7 @@ export default function AdminDashboardPage() {
   useEffect(() => {
     setCaseSummary(selectedBooking?.caseSheet?.caseSummary ?? "");
     setMedicationPlan(selectedBooking?.caseSheet?.medicationPlan ?? "");
+    setNotice("");
   }, [selectedBooking]);
 
   const saveCaseSheet = async () => {
